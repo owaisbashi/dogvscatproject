@@ -9,7 +9,7 @@
 		</style>
 </head>
 <body>
-	<input id="image-seletor" type="file">
+	<input id="image-selector" type="file">
 	<button id="predict-button" >Predict</button>
 	<p style="font-weight:bold">Predictions</p>
 	<p>Dog: <span id="dog-prediction"></span><p>
@@ -37,7 +37,7 @@
 			console.log(message)
 			$.post("http://127.0.0.1:5000/predict", JSON.stringify(message), function(response){
 				$("#dog-prediction").text(response.prediction.dog.toFixed(6));
-				$("cat-prediction").text(response.predictioncat.toFixed(6));
+				$("#cat-prediction").text(response.prediction.cat.toFixed(6));
 					console.log(response);
 				});
 			});

@@ -32,17 +32,24 @@ get_model()
 @app.route("/predict",methods=["POST"])
 def predict():
     message = request.get_json(force=True)
-    print(message)
+    #print(message)
     encoded= message['image']
     decoded= base64.b64decode(encoded)
     image=Image.open(io.BytesIO(decoded))
     preprocessed_image=preprocess_image(image,target_size=(150,150))
-    prediction=model.predict(preprocessed_image).tolist()
+    prediction=model.predict(preprocessed_image)
     print(prediction)
+    pred={'Dog':'','Cat':''}
+    if prediction==1:
+        pred['Dog']=1.0000000
+        pred['Cat']=0
+    else:
+        pred['Dog']=0
+        pred['Cat']=1.00000000
     response={
         'prediction': {
-            'dog' : prediction[0][0],
-            'cat' : prediction[0][1]
+            'dog' : pred['Dog'],
+            'cat' : pred['Cat']
         }
     }
     return (jsonify(response))
